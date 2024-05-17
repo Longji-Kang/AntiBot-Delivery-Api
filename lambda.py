@@ -19,14 +19,24 @@ def handler(event, context):
     
     item = response['Items']
     
-    url = str(item[0]['Url'])
+    if len(item) > 0:
+        url = str(item[0]['Url'])
+        
+        print(url)
+        
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": '{"url": "' + url + '"}'
+        }
     
-    print(url)
-    
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "body": '{"url": "' + url + '"}'
-    }
+    else:
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": '{"url": "NaN"}'
+        }
